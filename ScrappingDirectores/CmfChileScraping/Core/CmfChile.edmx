@@ -1,0 +1,160 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CmfChileModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ListadoDirectores">
+          <Key>
+            <PropertyRef Name="IdListadoDirectores" />
+          </Key>
+          <Property Name="IdListadoDirectores" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdListadoFiscalizados" Type="bigint" />
+          <Property Name="DateScraping" Type="datetime" />
+          <Property Name="Rut" Type="nvarchar" MaxLength="20" />
+          <Property Name="Nombre" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Cargo" Type="nvarchar" MaxLength="500" />
+          <Property Name="FechaNombramiento" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="ListadoFiscalizados">
+          <Key>
+            <PropertyRef Name="IdListadoFiscalizados" />
+          </Key>
+          <Property Name="IdListadoFiscalizados" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateScraping" Type="datetime" />
+          <Property Name="Rut" Type="nvarchar" MaxLength="20" />
+          <Property Name="Entidad" Type="nvarchar(max)" />
+          <Property Name="Estado" Type="nvarchar" MaxLength="10" />
+          <Property Name="UrlRegistroDirector" Type="nvarchar(max)" />
+          <Property Name="UrlListadoEmisor" Type="nvarchar(max)" />
+        </EntityType>
+        <Association Name="FK__ListadoDi__Lista__1B0907CE">
+          <End Role="ListadoFiscalizados" Type="Self.ListadoFiscalizados" Multiplicity="0..1" />
+          <End Role="ListadoDirectores" Type="Self.ListadoDirectores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListadoFiscalizados">
+              <PropertyRef Name="IdListadoFiscalizados" />
+            </Principal>
+            <Dependent Role="ListadoDirectores">
+              <PropertyRef Name="IdListadoFiscalizados" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="ClearTables" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="CmfChileModelStoreContainer">
+          <EntitySet Name="ListadoDirectores" EntityType="Self.ListadoDirectores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ListadoFiscalizados" EntityType="Self.ListadoFiscalizados" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ListadoDi__Lista__1B0907CE" Association="Self.FK__ListadoDi__Lista__1B0907CE">
+            <End Role="ListadoFiscalizados" EntitySet="ListadoFiscalizados" />
+            <End Role="ListadoDirectores" EntitySet="ListadoDirectores" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CmfChileModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="CmfChileEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ListadoDirectores" EntityType="CmfChileModel.ListadoDirectores" />
+          <EntitySet Name="ListadoFiscalizados" EntityType="CmfChileModel.ListadoFiscalizados" />
+          <AssociationSet Name="FK__ListadoDi__Lista__1B0907CE" Association="CmfChileModel.FK__ListadoDi__Lista__1B0907CE">
+            <End Role="ListadoFiscalizados" EntitySet="ListadoFiscalizados" />
+            <End Role="ListadoDirectores" EntitySet="ListadoDirectores" />
+          </AssociationSet>
+          <FunctionImport Name="ClearTables" />
+        </EntityContainer>
+        <EntityType Name="ListadoDirectores">
+          <Key>
+            <PropertyRef Name="IdListadoDirectores" />
+          </Key>
+          <Property Name="IdListadoDirectores" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdListadoFiscalizados" Type="Int64" />
+          <Property Name="DateScraping" Type="DateTime" Precision="3" />
+          <Property Name="Rut" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Nombre" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="Cargo" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FechaNombramiento" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ListadoFiscalizados" Relationship="CmfChileModel.FK__ListadoDi__Lista__1B0907CE" FromRole="ListadoDirectores" ToRole="ListadoFiscalizados" />
+        </EntityType>
+        <EntityType Name="ListadoFiscalizados">
+          <Key>
+            <PropertyRef Name="IdListadoFiscalizados" />
+          </Key>
+          <Property Name="IdListadoFiscalizados" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateScraping" Type="DateTime" Precision="3" />
+          <Property Name="Rut" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Entidad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Estado" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="UrlRegistroDirector" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="UrlListadoEmisor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ListadoDirectores" Relationship="CmfChileModel.FK__ListadoDi__Lista__1B0907CE" FromRole="ListadoFiscalizados" ToRole="ListadoDirectores" />
+        </EntityType>
+        <Association Name="FK__ListadoDi__Lista__1B0907CE">
+          <End Type="CmfChileModel.ListadoFiscalizados" Role="ListadoFiscalizados" Multiplicity="0..1" />
+          <End Type="CmfChileModel.ListadoDirectores" Role="ListadoDirectores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ListadoFiscalizados">
+              <PropertyRef Name="IdListadoFiscalizados" />
+            </Principal>
+            <Dependent Role="ListadoDirectores">
+              <PropertyRef Name="IdListadoFiscalizados" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CmfChileModelStoreContainer" CdmEntityContainer="CmfChileEntities">
+          <EntitySetMapping Name="ListadoDirectores">
+            <EntityTypeMapping TypeName="CmfChileModel.ListadoDirectores">
+              <MappingFragment StoreEntitySet="ListadoDirectores">
+                <ScalarProperty Name="FechaNombramiento" ColumnName="FechaNombramiento" />
+                <ScalarProperty Name="Cargo" ColumnName="Cargo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="DateScraping" ColumnName="DateScraping" />
+                <ScalarProperty Name="IdListadoFiscalizados" ColumnName="IdListadoFiscalizados" />
+                <ScalarProperty Name="IdListadoDirectores" ColumnName="IdListadoDirectores" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ListadoFiscalizados">
+            <EntityTypeMapping TypeName="CmfChileModel.ListadoFiscalizados">
+              <MappingFragment StoreEntitySet="ListadoFiscalizados">
+                <ScalarProperty Name="UrlListadoEmisor" ColumnName="UrlListadoEmisor" />
+                <ScalarProperty Name="UrlRegistroDirector" ColumnName="UrlRegistroDirector" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
+                <ScalarProperty Name="Entidad" ColumnName="Entidad" />
+                <ScalarProperty Name="Rut" ColumnName="Rut" />
+                <ScalarProperty Name="DateScraping" ColumnName="DateScraping" />
+                <ScalarProperty Name="IdListadoFiscalizados" ColumnName="IdListadoFiscalizados" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="ClearTables" FunctionName="CmfChileModel.Store.ClearTables" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
